@@ -7,7 +7,7 @@ from alpaca_trade_api.rest_async import AsyncRest
 NY = 'America/New_York'
 
 
-async def get_historic_data_base(symbols, start, end, timeframe=None, live=False):
+async def get_historic_data_base(symbols, start, end, timeframe, live):
     if live:
         rest = AsyncRest(os.getenv('ALPACA_KEY'), os.getenv('ALPACA_SECRET'))
     else:
@@ -31,10 +31,10 @@ async def get_historic_data_base(symbols, start, end, timeframe=None, live=False
     return dict(zip(symbols, results))
 
 
-async def get_historic_bars(symbols, start, end, timeframe):
-    return await get_historic_data_base(symbols, start, end, timeframe)
+async def get_historic_bars(symbols, start, end, timeframe, live):
+    return await get_historic_data_base(symbols, start, end, timeframe, live)
 
 
-async def main(symbols, start, end):
+async def main(symbols, start, end, live=False):
     timeframe = TimeFrame.Day
-    return await get_historic_bars(symbols, start, end, timeframe)
+    return await get_historic_bars(symbols, start, end, timeframe, live)
