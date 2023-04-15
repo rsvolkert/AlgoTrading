@@ -23,7 +23,7 @@ async def get_historic_data_base(symbols, start, end, timeframe, live):
     for i in range(0, len(symbols), step_size):
         tasks = []
         for symbol in symbols[i:i+step_size]:
-            args = [symbol, start, end, timeframe.vlaue] if timeframe else [symbol, start, end]
+            args = [symbol, start, end, timeframe.value] if timeframe else [symbol, start, end]
             tasks.append(rest.get_bars_async(*args))
 
             results.extend(await asyncio.gather(*tasks, return_exceptions=True))
@@ -35,6 +35,6 @@ async def get_historic_bars(symbols, start, end, timeframe, live):
     return await get_historic_data_base(symbols, start, end, timeframe, live)
 
 
-async def main(symbols, start, end, live=False):
+async def get_bars(symbols, start, end, live=True):
     timeframe = TimeFrame.Day
     return await get_historic_bars(symbols, start, end, timeframe, live)
